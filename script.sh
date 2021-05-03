@@ -1,5 +1,7 @@
 #!/bin/bash
 
+git pull origin main --rebase
+
 START=1619771400
 
 curl webmail.tu-berlin.de &> /dev/null
@@ -33,7 +35,6 @@ HOURS=$((HOURS%24))
 SINCE="$DAYS Tagen und $HOURS Stunden"
 sed -i -e "s/%TIMESINCE%/$SINCE/g" ./docs/index.html
 
-git pull origin main --rebase
 git add ./docs/index.html
 git commit -m "$(date)"
 git push
