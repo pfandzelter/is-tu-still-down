@@ -32,7 +32,14 @@ HOURS=$((HOURS%24))
 
 #echo $DAYS
 #echo $HOURS
-SINCE="$DAYS Tagen und $HOURS Stunden"
+SINCE="$DAYS Tagen"
+
+if [ 1 -eq $HOURS ]; then
+    SINCE="$SINCE und 1 Stunde"
+elif [ $HOURS -gt 1 ]; then
+    SINCE="$SINCE und $HOURS Stunden"
+fi
+
 sed -i -e "s/%TIMESINCE%/$SINCE/g" ./docs/index.html
 
 git add ./docs/index.html
