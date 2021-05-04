@@ -35,3 +35,10 @@ a {
   align-items: center;
   justify-content: center;
 }
+
+.banner {
+  display: block;
+  top: 0;
+  right: 0;
+  position: absolute;
+}
