@@ -13,7 +13,7 @@ cp template.html ./docs/index.html
 if [ $FAIL ]; then
     sed -i -e 's/%ANSWER%/Nein/g' ./docs/index.html
 else
-    sed -i -e 's/%ANSWER%/Nein/g' ./docs/index.html
+    sed -i -e 's/%ANSWER%/Ja/g' ./docs/index.html
 fi
 
 TIME=$(TZ=Europe/Berlin LC_ALL=de_DE.utf8 date)
