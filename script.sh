@@ -4,20 +4,69 @@ git pull origin main --rebase
 
 START=1619771400
 
-curl webmail.tu-berlin.de &> /dev/null
-
-FAIL=$?
 
 cp template.html ./docs/index.html
 
-if [ $FAIL ]; then
-    sed -i -e 's/%ANSWER%/Nein/g' ./docs/index.html
-else
-    sed -i -e 's/%ANSWER%/Ja/g' ./docs/index.html
-fi
-
 TIME=$(TZ=Europe/Berlin LC_ALL=de_DE.utf8 date)
 sed -i -e "s/%DATETIME%/$TIME/g" ./docs/index.html
+
+# test tuport
+curl -m 30 https://tuport.sap.tu-berlin.de/ &> /dev/null
+
+FAIL=$?
+
+if [ $FAIL -ne 0 ]; then
+    sed -i -e "s/%%TUPORT-ANSWER%%/Nein/g" ./docs/index.html
+    sed -i -e "s/%%TUPORT-ANSWER-CODE%%/no/g" ./docs/index.html
+else
+    sed -i -e "s/%%TUPORT-ANSWER%%/Ja/g" ./docs/index.html
+    sed -i -e "s/%%TUPORT-ANSWER-CODE%%/yes/g" ./docs/index.html
+fi
+
+
+# test qispos
+curl -m 30 https://www3.ib.tu-berlin.de/ &> /dev/null
+
+FAIL=$?
+
+if [ $FAIL -ne 0 ]; then
+    sed -i -e "s/%%QISPOS-ANSWER%%/Nein/g" ./docs/index.html
+    sed -i -e "s/%%QISPOS-ANSWER-CODE%%/no/g" ./docs/index.html
+else
+    sed -i -e "s/%%QISPOS-ANSWER%%/Ja/g" ./docs/index.html
+    sed -i -e "s/%%QISPOS-ANSWER-CODE%%/yes/g" ./docs/index.html
+fi
+
+
+# test tubcloud
+curl -m 30 https://tubcloud.tu-berlin.de/ &> /dev/null
+
+FAIL=$?
+
+if [ $FAIL -ne 0 ]; then
+    sed -i -e "s/%%TUBCLOUD-ANSWER%%/Nein/g" ./docs/index.html
+    sed -i -e "s/%%TUBCLOUD-ANSWER-CODE%%/no/g" ./docs/index.html
+else
+    sed -i -e "s/%%TUBCLOUD-ANSWER%%/Ja/g" ./docs/index.html
+    sed -i -e "s/%%TUBCLOUD-ANSWER-CODE%%/yes/g" ./docs/index.html
+fi
+
+
+# test gitlab
+curl -m 30 https://git.tu-berlin.de/ &> /dev/null
+
+FAIL=$?
+
+if [ $FAIL -ne 0 ]; then
+    sed -i -e "s/%%GITLAB-ANSWER%%/Nein/g" ./docs/index.html
+    sed -i -e "s/%%GITLAB-ANSWER-CODE%%/no/g" ./docs/index.html
+else
+    sed -i -e "s/%%GITLAB-ANSWER%%/Ja/g" ./docs/index.html
+    sed -i -e "s/%%GITLAB-ANSWER-CODE%%/yes/g" ./docs/index.html
+fi
+
+
+# end
 
 END=$(TZ=Europe/Berlin date -u +%s)
 DURATION=$((END-START))

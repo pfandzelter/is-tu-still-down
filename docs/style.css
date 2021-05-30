@@ -11,6 +11,23 @@ a {
   color: #c50e1f;
 }
 
+.answer-yes {
+  color: #109f6a;
+}
+
+.answer-no {
+  color: #c50e1f;
+}
+
+.answer-maybe {
+  background-image: linear-gradient(to left, #c50e1f, #109f6a);
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-decoration: underline;
+}
+
 #main {
   height: 100vh;
   width: 100%;
@@ -27,6 +44,18 @@ a {
 #answer {
   margin: 32px;
   font-size: 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.answer-small {
+  font-size: 32px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 150%;
 }
 
 #footer {
@@ -42,3 +71,4 @@ a {
   right: 0;
   position: absolute;
 }
+
