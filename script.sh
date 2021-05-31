@@ -70,9 +70,15 @@ fi
 
 END=$(TZ=Europe/Berlin date -u +%s)
 DURATION=$((END-START))
+
+MONTHS=$((DURATION%2678400))
+MONTHS=$((DURATION - MONTHS))
+MONTHS=$((MONTHS/2678400))
+
 DAYS=$((DURATION%86400))
 DAYS=$((DURATION - DAYS))
 DAYS=$((DAYS/86400))
+DAYS=$((DAYS%31))
 
 HOURS=$((DURATION%3600))
 HOURS=$((DURATION - HOURS))
@@ -81,7 +87,28 @@ HOURS=$((HOURS%24))
 
 #echo $DAYS
 #echo $HOURS
-SINCE="$DAYS Tagen"
+
+SINCE=""
+
+if [ 1 -eq $MONTHS ]; then
+    SINCE="1 Monat"
+elif [ $HOURS -gt 1 ]; then
+    SINCE="$MONTHS Monaten"
+fi
+
+if [ $HOURS -gt 0  -a  $DAYS -gt 0 ] ; then
+    SINCE="$SINCE,"
+elif [ $HOURS -eq 0  -a  $DAYS -gt 0 ]; then
+    SINCE="$SINCE und"
+else
+    SINCE="$SINCE"
+fi
+
+if [ 1 -eq $DAYS ]; then
+    SINCE="$SINCE 1 Tag"
+elif [ $DAYS -gt 1 ]; then
+    SINCE="$SINCE $DAYS Tagen"
+fi
 
 if [ 1 -eq $HOURS ]; then
     SINCE="$SINCE und 1 Stunde"
