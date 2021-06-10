@@ -25,16 +25,16 @@ fi
 
 
 # test qispos
-curl -m 30 https://www3.ib.tu-berlin.de/ &> /dev/null
+curl -s -m 30 https://www3.ib.tu-berlin.de/index.html | grep "Einige Webdienste stehen momentan leider nicht zur Verf&uuml;gung." &> /dev/null
 
-FAIL=$?
+SUCC=$?
 
-if [ $FAIL -ne 0 ]; then
-    sed -i -e "s/%%QISPOS-ANSWER%%/Nein/g" ./docs/index.html
-    sed -i -e "s/%%QISPOS-ANSWER-CODE%%/no/g" ./docs/index.html
-else
+if [ $SUCC -ne 0 ]; then
     sed -i -e "s/%%QISPOS-ANSWER%%/Ja/g" ./docs/index.html
     sed -i -e "s/%%QISPOS-ANSWER-CODE%%/yes/g" ./docs/index.html
+else
+    sed -i -e "s/%%QISPOS-ANSWER%%/Nein/g" ./docs/index.html
+    sed -i -e "s/%%QISPOS-ANSWER-CODE%%/no/g" ./docs/index.html
 fi
 
 
