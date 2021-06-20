@@ -25,7 +25,7 @@ fi
 
 
 # test qispos
-curl -s -m 30 https://www3.ib.tu-berlin.de/index.html | grep "Einige Webdienste stehen momentan leider nicht zur Verf&uuml;gung." &> /dev/null
+curl -s -m 30 https://www3.ib.tu-berlin.de/index.html | grep "nicht zur Verf&uuml;gung." &> /dev/null
 
 SUCC=$?
 
