@@ -11,7 +11,7 @@ TIME=$(TZ=Europe/Berlin LC_ALL=de_DE.utf8 date)
 sed -i -e "s/%DATETIME%/$TIME/g" ./docs/index.html
 
 # test tuport
-curl -m 30 https://tuport.sap.tu-berlin.de/ &> /dev/null
+curl -m 30 "https://tuport.sap.tu-berlin.de/" &> /dev/null
 
 FAIL=$?
 
@@ -25,21 +25,21 @@ fi
 
 
 # test qispos
-curl -s -m 30 https://www3.ib.tu-berlin.de/index.html | grep "nicht zur Verf&uuml;gung." &> /dev/null
+curl --fail -m 30 "https://www3.ib.tu-berlin.de/qisserver/rds?state=user&type=0" &> /dev/null
 
-SUCC=$?
+FAIL=$?
 
-if [ $SUCC -ne 0 ]; then
-    sed -i -e "s/%%QISPOS-ANSWER%%/Ja/g" ./docs/index.html
-    sed -i -e "s/%%QISPOS-ANSWER-CODE%%/yes/g" ./docs/index.html
-else
+if [ $FAIL -ne 0 ]; then
     sed -i -e "s/%%QISPOS-ANSWER%%/Nein/g" ./docs/index.html
     sed -i -e "s/%%QISPOS-ANSWER-CODE%%/no/g" ./docs/index.html
+else
+    sed -i -e "s/%%QISPOS-ANSWER%%/Ja/g" ./docs/index.html
+    sed -i -e "s/%%QISPOS-ANSWER-CODE%%/yes/g" ./docs/index.html
 fi
 
 
 # test tubcloud
-curl -m 30 https://tubcloud.tu-berlin.de/ &> /dev/null
+curl -m 30 "https://tubcloud.tu-berlin.de/" &> /dev/null
 
 FAIL=$?
 
@@ -53,7 +53,7 @@ fi
 
 
 # test gitlab
-curl -m 30 https://git.tu-berlin.de/ &> /dev/null
+curl -m 30 "https://git.tu-berlin.de/" &> /dev/null
 
 FAIL=$?
 
