@@ -92,7 +92,7 @@ SINCE=""
 
 if [ 1 -eq $MONTHS ]; then
     SINCE="1 Monat"
-elif [ $HOURS -gt 1 ]; then
+elif [ $MONTHS -gt 1 ]; then
     SINCE="$MONTHS Monaten"
 fi
 
